@@ -14,6 +14,8 @@
 		09F5789F225B349400157F98 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09F5789D225B349400157F98 /* LaunchScreen.storyboard */; };
 		09F578AA225B349400157F98 /* FavouritePlacesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F578A9225B349400157F98 /* FavouritePlacesTests.swift */; };
 		09F578B5225B349400157F98 /* FavouritePlacesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F578B4225B349400157F98 /* FavouritePlacesUITests.swift */; };
+		09F578C3225B38C400157F98 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F578C2225B38C400157F98 /* DetailViewController.swift */; };
+		09F578E9225B658000157F98 /* Places.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F578E8225B658000157F98 /* Places.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,8 @@
 		09F578B0225B349400157F98 /* FavouritePlacesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FavouritePlacesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		09F578B4225B349400157F98 /* FavouritePlacesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritePlacesUITests.swift; sourceTree = "<group>"; };
 		09F578B6225B349400157F98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		09F578C2225B38C400157F98 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		09F578E8225B658000157F98 /* Places.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Places.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,8 +101,10 @@
 		09F57893225B349300157F98 /* FavouritePlaces */ = {
 			isa = PBXGroup;
 			children = (
+				09F578E7225B651A00157F98 /* Model */,
 				09F57894225B349300157F98 /* AppDelegate.swift */,
 				09F57896225B349300157F98 /* ViewController.swift */,
+				09F578C2225B38C400157F98 /* DetailViewController.swift */,
 				09F57898225B349300157F98 /* Main.storyboard */,
 				09F5789B225B349400157F98 /* Assets.xcassets */,
 				09F5789D225B349400157F98 /* LaunchScreen.storyboard */,
@@ -123,6 +129,14 @@
 				09F578B6225B349400157F98 /* Info.plist */,
 			);
 			path = FavouritePlacesUITests;
+			sourceTree = "<group>";
+		};
+		09F578E7225B651A00157F98 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				09F578E8225B658000157F98 /* Places.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -256,6 +270,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09F578C3225B38C400157F98 /* DetailViewController.swift in Sources */,
+				09F578E9225B658000157F98 /* Places.swift in Sources */,
 				09F57897225B349300157F98 /* ViewController.swift in Sources */,
 				09F57895225B349300157F98 /* AppDelegate.swift in Sources */,
 			);
