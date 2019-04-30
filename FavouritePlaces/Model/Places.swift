@@ -9,7 +9,7 @@
 import Foundation
 
 /// The class model used for when appending, and editing information from views.
-class Places {
+class Places: Codable {
     /// The name of the address
     var name: String = ""
     /// The location of the address

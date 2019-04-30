@@ -95,13 +95,11 @@ class DetailViewController: UITableViewController, UITextFieldDelegate {
     }
     
     
-    
-    
+
     
     func saveInModel() {
         place?.name = nameField.text ?? ""
         place?.address = addressField.text ?? ""
-        
         guard let text = latitudeField.text,
             let yeet = Double(text) else {
                 return }

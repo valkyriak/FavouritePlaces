@@ -15,14 +15,64 @@ class ViewController: UITableViewController, UITextFieldDelegate, DetailViewCont
     
     /// Used for storage
     var objects = [Places]()
+
+//    var places = [Place]()
     
     // Used for keeping track if the user is adding a new place or not
     var newFavPlace = false
+    
+    let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     
     override func viewDidLoad() {
         navigationItem.leftBarButtonItem = editButtonItem
         super.viewDidLoad()
         navigationItem.leftBarButtonItem = editButtonItem
+    }
+    struct Place: Codable {
+        let name: String
+        let address: String
+        let longitude: Double
+        let latitude: Double
+    }
+
+    fileprivate func decodeJSON() {
+        do {
+            let fileURL = docs.appendingPathComponent("json")
+            let data = try Data(contentsOf: fileURL)
+            let decoder = JSONDecoder()
+            
+            self.objects = try decoder.decode([Places].self, from: data)
+            
+            print("Got \(objects.count) places:")
+            print("")
+            
+            self.tableView.reloadData()
+        } catch {
+            print("Error: \(error)")
+        }
+    }
+    func encodeJSON() {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        
+        do {
+            let placeEncode = objects
+            
+            let jsonData = try encoder.encode(placeEncode)
+            
+            let fileURL = docs.appendingPathComponent("json")
+            //            print(fileURL)
+            try jsonData.write(to: fileURL, options: .atomic)
+            
+            if let jsonString = String(data: jsonData, encoding: .utf8) {
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        decodeJSON()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -66,6 +116,7 @@ class ViewController: UITableViewController, UITextFieldDelegate, DetailViewCont
         newFavPlace = true
         navigationController?.popViewController(animated: true)
         tableView.reloadData()
+        encodeJSON()
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -85,6 +136,9 @@ class ViewController: UITableViewController, UITextFieldDelegate, DetailViewCont
         let place = objects[i]
         cell.textLabel?.text = place.name
         cell.detailTextLabel?.text = ""
+        
+        encodeJSON()
+        
         return cell
     }
     
@@ -95,11 +149,13 @@ class ViewController: UITableViewController, UITextFieldDelegate, DetailViewCont
         objects.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
         tableView.reloadData()
+        encodeJSON()
     }
     /// Handles reordering of the table view cells
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         let object = objects.remove(at: sourceIndexPath.row)
         objects.insert(object, at: destinationIndexPath.row)
+        encodeJSON()
     }
     
         
