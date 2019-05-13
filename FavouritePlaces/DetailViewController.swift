@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import MapKit
 
 protocol DetailViewControllerDelegate {
     func okayPressed()
@@ -15,6 +16,9 @@ protocol DetailViewControllerDelegate {
 }
 
 class DetailViewController: UITableViewController, UITextFieldDelegate {
+    
+    var coordOne = 0.0
+    var coordTwo = 0.0
     
     let geo = CLGeocoder()
     var copyOfOGPlace: Places?
@@ -30,6 +34,20 @@ class DetailViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var addressField: UITextField!
     @IBOutlet weak var latitudeField: UITextField!
     @IBOutlet weak var longitudeField: UITextField!
+    
+
+    @IBAction func latitudeField(_ sender: UITextField) {
+        guard let latitudeText = sender.text,
+            let latitude = Double(latitudeText) else { return }
+        coordOne = latitude
+        reverseGeoCode()
+    }
+    @IBAction func longitudeField(_ sender: UITextField) {
+        guard let longitudeText = sender.text,
+            let longitude = Double(longitudeText) else { return }
+        coordTwo = longitude
+        reverseGeoCode()
+    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -58,10 +76,13 @@ class DetailViewController: UITableViewController, UITextFieldDelegate {
         }
     
     func reverseGeoCode(){
+        // Geocode Location
         let geo = CLGeocoder()
-        let location = CLLocation(latitude: 0.0, longitude: 0.0)
+        
+        //Create Location
+        let location = CLLocation(latitude: coordOne, longitude: coordTwo)
         geo.reverseGeocodeLocation(location){
-            guard let places = $0 else {
+            guard let places = 0 else {
                 print("Error")
                 return
             }
