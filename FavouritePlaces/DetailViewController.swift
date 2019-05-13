@@ -57,8 +57,26 @@ class DetailViewController: UITableViewController, UITextFieldDelegate {
         copyOfOGPlace = Places(name: (place?.name)!, address: (place?.address)!, latitude: (place?.latitude)!, longitude: (place?.longitude)!)
         }
     
-    
-    
+    func reverseGeoCode(){
+        let geo = CLGeocoder()
+        let location = CLLocation(latitude: 0.0, longitude: 0.0)
+        geo.reverseGeocodeLocation(location){
+            guard let places = $0 else {
+                print("Error")
+                return
+            }
+            for place in places {
+                guard let name = place.name else {
+                    print("No name found")
+                    continue
+                }
+                self.nameField.text = place.locality
+                self.addressField.text = name
+                
+            }
+        }
+        
+    }
     
     @IBAction func addressEditingEnd(_ sender: Any) {
         let address = addressField.text!
@@ -86,9 +104,6 @@ class DetailViewController: UITableViewController, UITextFieldDelegate {
                 if self.longitudeField.text == "0.0" {
                     self.longitudeField.text = longString
                 }
-                
-                //                self.latField.text = latString
-                //                self.longField.text = longString
                 
             }
         }
