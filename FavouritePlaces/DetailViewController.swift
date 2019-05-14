@@ -35,17 +35,18 @@ class DetailViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var latitudeField: UITextField!
     @IBOutlet weak var longitudeField: UITextField!
     
-
     @IBAction func latitudeField(_ sender: UITextField) {
-        guard let latitudeText = sender.text,
+        guard let latitudeText = latitudeField.text,
             let latitude = Double(latitudeText) else { return }
         coordOne = latitude
+        print("hello")
         reverseGeoCode()
     }
     @IBAction func longitudeField(_ sender: UITextField) {
-        guard let longitudeText = sender.text,
+        guard let longitudeText = longitudeField.text,
             let longitude = Double(longitudeText) else { return }
         coordTwo = longitude
+        print("hello")
         reverseGeoCode()
     }
     
@@ -76,32 +77,30 @@ class DetailViewController: UITableViewController, UITextFieldDelegate {
         }
     
     func reverseGeoCode(){
-        // Geocode Location
         let geo = CLGeocoder()
-        
-        //Create Location
         let location = CLLocation(latitude: coordOne, longitude: coordTwo)
         geo.reverseGeocodeLocation(location){
-            guard let places = 0 else {
-                print("Error")
+            guard let places = $0 else {
+                print("Got error \(String(describing: $1))")
                 return
             }
-            for place in places {
+            for place in places{
                 guard let name = place.name else {
-                    print("No name found")
+                    print("Got no name")
                     continue
                 }
+                print("Name: \(name), \(place.administrativeArea ?? "nothingFound"), \(place.locality ?? "nothingFound")")
                 self.nameField.text = place.locality
                 self.addressField.text = name
-                
             }
         }
         
+        
     }
-    
+
     @IBAction func addressEditingEnd(_ sender: Any) {
         let address = addressField.text!
-        
+
         geo.geocodeAddressString(address) {
             guard let placeMarks = $0 else {
                 print("Got Error: \(String(describing: $1))")
@@ -111,21 +110,21 @@ class DetailViewController: UITableViewController, UITextFieldDelegate {
                 guard let location = placeMark.location else {
                     continue
                 }
-                
+
                 print("got lat: \(location.coordinate.latitude) and Long: \(location.coordinate.longitude) for \(address)")
                 let latSearched = location.coordinate.latitude
                 let latString = String(latSearched)
                 let longSearched = location.coordinate.longitude
                 let longString = String(longSearched)
-                
+
                 if self.latitudeField.text == "0.0" {
                     self.latitudeField.text = latString
                 }
-                
+
                 if self.longitudeField.text == "0.0" {
                     self.longitudeField.text = longString
                 }
-                
+
             }
         }
     }
